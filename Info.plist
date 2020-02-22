@@ -11,9 +11,12 @@
 	<key>Buffer Order</key>
 	<array>
 		<string>Main</string>
+		<string>Blocks</string>
 	</array>
 	<key>Dependencies</key>
-	<array/>
+	<array>
+		<string>Craft:Voxel Player</string>
+	</array>
 	<key>Description</key>
 	<string>No description available</string>
 </dict>
