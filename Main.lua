@@ -13,15 +13,16 @@ function setup()
     allBlocks = blocks()
     
     -- Setup voxel terrain
+    local m = 1 -- 5
     scene.voxels:resize(vec3(5,1,5))      
-    scene.voxels.coordinates = vec3(0,0,0)    
+    scene.voxels.coordinates = vec3(-16*m,0,-16*m)    
     scene.voxels:fill("Dirt Grass")
-    local m = 5 -- 5
     scene.voxels:box(-16*m,1,-16*m,16*m,1,16*m)
     scene.voxels:fill("Bedrock")
     scene.voxels:box(0,0,0, 16*m,0,16*m)
     
     setupCamera(scene)
+
 end
 
 function setupCamera(scene)
