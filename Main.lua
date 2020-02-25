@@ -17,7 +17,7 @@ function setup()
     scene.voxels:resize(vec3(5,1,5))      
     scene.voxels.coordinates = vec3(-16*m,0,-16*m)    
     scene.voxels:fill("Dirt Grass")
-    scene.voxels:box(-16*m,1,-16*m,16*m,1,16*m)
+    scene.voxels:box(0,2,0,16*m,2,16*m)
     scene.voxels:fill("Bedrock")
     scene.voxels:box(0,0,0, 16*m,0,16*m)
     
