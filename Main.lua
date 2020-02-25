@@ -15,11 +15,11 @@ function setup()
     -- Setup voxel terrain
     scene.voxels:resize(vec3(5,1,5))      
     scene.voxels.coordinates = vec3(0,0,0)    
-    -- Create ground put of grass
-    --scene.voxels:fill("Bedrock")
-    --scene.voxels:box(0,10,0,16*5,10,16*5)
-    scene.voxels:fill("Dirt")
-    scene.voxels:box(0,0,0,16*5,9,16*5)
+    scene.voxels:fill("Dirt Grass")
+    local m = 5 -- 5
+    scene.voxels:box(0,1,0,16*m,1,16*m)
+    scene.voxels:fill("Bedrock")
+    scene.voxels:box(0,0,0, 16*m,0,16*m)
     
     setupCamera(scene)
 end
