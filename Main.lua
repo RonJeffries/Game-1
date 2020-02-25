@@ -21,11 +21,33 @@ function setup()
     scene.voxels:fill("Dirt")
     scene.voxels:box(0,0,0,16*5,9,16*5)
     
-    scene:entity():add(craft.camera, 45, -100, 100, false)
+    setupCamera(scene)
 end
 
+function setupCamera(scene)
+    scene.camera.z = -4
+    local cameraSettings = scene.camera:get(craft.camera)
+    local fieldOfView = 60
+    local ortho = false
+    local orthoSize = 5
+    cameraSettings.fieldOfView = fieldOfView
+    cameraSettings.ortho = ortho
+    cameraSettings.orthoSize = orthoSize
+end
+
+
 function update(dt)
+    updateCamera(dt, scene)
     scene:update(dt)
+end
+
+function updateCamera(dt, scene)
+    if CurrentTouch.state == MOVING then 
+        CameraX = (CameraX or 0) - CurrentTouch.deltaX * 0.25
+        CameraY = (CameraY or 0) - CurrentTouch.deltaY * 0.25
+        scene.camera.eulerAngles = vec3(CameraY, CameraX, 0)
+        scene.camera.position = -scene.camera.forward * 5
+    end
 end
 
 function draw()
