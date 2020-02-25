@@ -14,9 +14,7 @@
 		<string>Blocks</string>
 	</array>
 	<key>Dependencies</key>
-	<array>
-		<string>Craft:Voxel Player</string>
-	</array>
+	<array/>
 	<key>Description</key>
 	<string>No description available</string>
 </dict>
