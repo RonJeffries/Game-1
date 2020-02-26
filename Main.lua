@@ -22,10 +22,17 @@ function setup()
     scene.voxels:box(0,0,0, 16*m,0,16*m)
     
     setupCamera(scene)
+    
+    parameter.number("CameraX", 0, 360)
+    parameter.number("CameraY", 0, 360)
+    parameter.number("CameraZ", 0, 360)
+    parameter.watch("Camera.position")
+    parameter.watch("Camera.forward")
 
 end
 
 function setupCamera(scene)
+    Camera = scene.camera
     scene.camera.z = -4
     local cameraSettings = scene.camera:get(craft.camera)
     local fieldOfView = 60
@@ -46,9 +53,9 @@ function updateCamera(dt, scene)
     if CurrentTouch.state == MOVING then 
         CameraX = (CameraX or 0) - CurrentTouch.deltaX * 0.25
         CameraY = (CameraY or 0) - CurrentTouch.deltaY * 0.25
-        scene.camera.eulerAngles = vec3(CameraY, CameraX, 0)
-        scene.camera.position = -scene.camera.forward * 5
     end
+    scene.camera.eulerAngles = vec3(CameraY, CameraX, CameraZ or 0)
+    scene.camera.position = -scene.camera.forward * 20 + vec3(8,0,8)
 end
 
 function draw()
