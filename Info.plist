@@ -12,6 +12,7 @@
 	<array>
 		<string>Main</string>
 		<string>Blocks</string>
+		<string>GameCamera</string>
 	</array>
 	<key>Dependencies</key>
 	<array>
