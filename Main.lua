@@ -1,6 +1,7 @@
 -- Game-1
--- 20200222 initial plan, make a floor
--- 20200226 camera object works w/o touch
+-- RJ 20200222 initial plan, make a floor
+-- RJ 20200226 camera object works w/o touch
+-- RJ 20200227 cleanup
 
 function setup()
     scene = craft.scene()
@@ -23,13 +24,6 @@ function setup()
     scene.voxels:box(0,0,0, 16*m,0,16*m)
     
     setupCamera(scene)
-    
-    parameter.number("CameraX", 0, 360)
-    parameter.number("CameraY", 0, 360)
-    parameter.number("CameraZ", 0, 360)
-    parameter.watch("scene.camera.position")
-    parameter.watch("scene.camera.forward")
-
 end
 
 function setupCamera(scene)
