@@ -8,10 +8,10 @@ function GameCamera:init(entity)
     self.entity = entity
     self.camera = entity:get(craft.camera)
     Camera = self.camera
-    self.cameraX = 0
-    self.cameraY = 0
-    self.cameraZ = 0
-    self.cameraDistance = 20
+    self.rx = 0
+    self.ry = 0
+    self.rz = 0
+    self.distance = 20
     self.target = vec3(8,0,8)
     --[[local fieldOfView = 60
     local ortho = false
@@ -23,10 +23,10 @@ end
 
 function GameCamera:update(dt)
     if CurrentTouch.state == MOVING then 
-        self.cameraX = self.cameraX - CurrentTouch.deltaY * 0.25 -- note XY inversion
-        self.cameraY = self.cameraY - CurrentTouch.deltaX * 0.25
+        self.rx = self.rx - CurrentTouch.deltaY * 0.25 -- note XY inversion
+        self.ry = self.ry - CurrentTouch.deltaX * 0.25
     end
-    local rotation = quat.eulerAngles(self.cameraX, self.cameraY, self.cameraZ)
+    local rotation = quat.eulerAngles(self.rx, self.ry, self.rz)
     self.entity.rotation = rotation
-    self.entity.position = -self.entity.forward * self.cameraDistance + self.target
+    self.entity.position = -self.entity.forward * self.distance + self.target
 end
