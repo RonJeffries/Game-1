@@ -13,15 +13,19 @@ function GameCamera:init(entity)
     self.rz = 0
     self.distance = 20
     self.target = vec3(8,0,8)
-    --[[local fieldOfView = 60
-    local ortho = false
-    local orthoSize = 5
-    Camera.fieldOfView = fieldOfView
-    Camera.ortho = ortho
-    Camera.orthoSize = orthoSize ]]--
+    parameter.number("FOV", 0, 360, 60)
+    parameter.boolean("ORTHO", false)
+    parameter.number("OrthoSize", 1, 20, 5)
+end
+
+function GameCamera:updateParams()
+    self.camera.fieldOfView = FOV
+    self.camera.ortho = ORTHO
+    self.camera.orthoSize = OrthoSize
 end
 
 function GameCamera:update(dt)
+    self:updateParams()
     if CurrentTouch.state == MOVING then 
         self.rx = self.rx - CurrentTouch.deltaY * 0.25 -- note XY inversion
         self.ry = self.ry - CurrentTouch.deltaX * 0.25
