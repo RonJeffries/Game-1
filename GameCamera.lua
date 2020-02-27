@@ -23,8 +23,8 @@ end
 
 function GameCamera:update(dt)
     if CurrentTouch.state == MOVING then 
-        self.cameraX = self.cameraX - CurrentTouch.deltaX * 0.25
-        self.cameraY = self.cameraY - CurrentTouch.deltaY * 0.25
+        self.cameraX = self.cameraX - CurrentTouch.deltaY * 0.25 -- note XY inversion
+        self.cameraY = self.cameraY - CurrentTouch.deltaX * 0.25
     end
     local rotation = quat.eulerAngles(self.cameraX, self.cameraY, self.cameraZ)
     self.entity.rotation = rotation
