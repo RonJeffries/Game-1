@@ -7,7 +7,6 @@ GameCamera = class()
 function GameCamera:init(entity)
     self.entity = entity
     self.camera = entity:get(craft.camera)
-    Camera = self.camera
     self.rx = 0
     self.ry = 0
     self.rz = 0
