@@ -13,6 +13,7 @@
 		<string>Main</string>
 		<string>Blocks</string>
 		<string>GameCamera</string>
+		<string>Creature</string>
 	</array>
 	<key>Dependencies</key>
 	<array>

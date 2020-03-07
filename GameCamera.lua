@@ -1,14 +1,15 @@
 -- GameCamera
 -- RJ 20200226
 -- RJ 20200227 move camera rotation inside; cleanup
+-- RJ 20200307 change starting rx ry for fun
 
 GameCamera = class()
 
 function GameCamera:init(entity)
     self.entity = entity
     self.camera = entity:get(craft.camera)
-    self.rx = 0
-    self.ry = 0
+    self.rx = 45
+    self.ry = 45
     self.rz = 0
     self.distance = 20
     self.target = vec3(8,0,8)

@@ -24,11 +24,17 @@ function setup()
     scene.voxels:fill("Bedrock")
     scene.voxels:box(0,0,0, 16*m,0,16*m)
     
+    setupCreature(scene)
+    
     setupCamera(scene)
 end
 
 function setupCamera(scene)
     scene.camera:add(GameCamera)
+end
+
+function setupCreature(scene)
+    scene:entity():add(Creature, 7, 7)
 end
 
 
