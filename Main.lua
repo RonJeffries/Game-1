@@ -34,7 +34,7 @@ function setupCamera(scene)
 end
 
 function setupCreature(scene)
-    scene:entity():add(Creature, 7, 7)
+    scene:entity():add(Creature, 7, 7, actions)
 end
 
 
