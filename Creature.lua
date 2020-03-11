@@ -4,7 +4,7 @@ local CreatureMaxTime = 300
 
 function Creature:init(entity, x, z, behaviors)
     self.entity = entity
-    self.behaviors = behaviors or {self.walk}
+    self.behaviors = behaviors or {self.avoid}
     self.time = 0
     entity.x = x
     entity.z = z
@@ -41,4 +41,64 @@ function Creature:walk()
         end
     end
     return tab
+end
+
+function Creature:avoid()
+    local twist = 21
+    local max = 15
+    local min = 1
+    local tab = {speed=10, turn=0}
+    local eyeR = self:eyePos(vec3(0.5, 0, 0.5))
+    local eyeL = self:eyePos(vec3(-0.5, 0, 0.5))
+    if (eyeR.x > max or eyeL.x > max) then
+        print("xmax")
+        if ( eyeR.x > eyeL.x ) then
+            tab.turn = tab.turn - twist
+        else
+            tab.turn = tab.turn + twist
+        end
+        return tab
+    end
+    if (eyeR.z > max or eyeL.z > max) then
+        print("zmax")
+        if ( eyeR.z > eyeL.z ) then
+            tab.turn = tab.turn - twist
+        else
+            tab.turn = tab.turn + twist
+        end
+        return tab
+    end
+    if (eyeR.x < min or eyeL.x < min) then
+        print("xmin")
+        if ( eyeR.x > eyeL.x ) then
+            tab.turn = tab.turn + twist
+        else
+            tab.turn = tab.turn - twist
+        end
+        return tab
+    end
+    if (eyeR.z < min or eyeL.z < min) then
+        print("zmin")
+        if ( eyeR.z > eyeL.z ) then
+            tab.turn = tab.turn + twist
+        else
+            tab.turn = tab.turn - twist
+        end
+        return tab
+    end
+    --tab.turn = tab.turn + self:twistForMin(eyeR.x, eyeL.x, min)
+    --tab.turn = tab.turn + self:twistForMin(eyeR.z, eyeL.z, min)
+    return tab
+end
+
+function Creature:twistForMin(eyeR, eyeL, min)
+    if eyeR < min or eyeL < min then
+        return self:sign(eyeR-eyeL)
+    else
+        return 0
+    end
+end
+
+function Creature:eyePos(eyeRel)
+    return self.entity:transformPoint(eyeRel)
 end
