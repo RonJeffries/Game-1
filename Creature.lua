@@ -68,26 +68,8 @@ function Creature:avoid()
         end
         return tab
     end
-    if (eyeR.x < min or eyeL.x < min) then
-        print("xmin")
-        if ( eyeR.x > eyeL.x ) then
-            tab.turn = tab.turn + twist
-        else
-            tab.turn = tab.turn - twist
-        end
-        return tab
-    end
-    if (eyeR.z < min or eyeL.z < min) then
-        print("zmin")
-        if ( eyeR.z > eyeL.z ) then
-            tab.turn = tab.turn + twist
-        else
-            tab.turn = tab.turn - twist
-        end
-        return tab
-    end
-    --tab.turn = tab.turn + self:twistForMin(eyeR.x, eyeL.x, min)
-    --tab.turn = tab.turn + self:twistForMin(eyeR.z, eyeL.z, min)
+    tab.turn = tab.turn + self:twistForMin(eyeR.x, eyeL.x, min)*twist
+    tab.turn = tab.turn + self:twistForMin(eyeR.z, eyeL.z, min)*twist
     return tab
 end
 
@@ -101,4 +83,13 @@ end
 
 function Creature:eyePos(eyeRel)
     return self.entity:transformPoint(eyeRel)
+end
+
+function Creature:sign(anInteger)
+    if anInteger >= 0 then
+        return 1
+    else 
+        return -1
+    end
+    
 end
