@@ -25,7 +25,7 @@ function setup()
     scene.voxels:box(0,0,0, 16*m,0,16*m)
     
     setupCreature(scene)
-    
+    setupObstacle(scene, 7,10)
     setupCamera(scene)
 end
 
@@ -37,6 +37,16 @@ function setupCreature(scene)
     scene:entity():add(Creature, 7, 7, actions)
 end
 
+function setupObstacle(scene, x, z)
+    scene.voxels:fill("Bedrock")
+    scene.voxels:box(7,1,10, 7,4,10)
+    local entity = scene:entity()
+    entity.x = x
+    entity.y = 2
+    entity.z = z
+    entity.model = craft.model.cube(vec3(1,1,1))
+    entity.material = craft.material("Materials:Standard")
+end
 
 function update(dt)
     scene:update(dt)

@@ -14,10 +14,12 @@
 		<string>Blocks</string>
 		<string>GameCamera</string>
 		<string>Creature</string>
+		<string>TestGame</string>
 	</array>
 	<key>Dependencies</key>
 	<array>
 		<string>Craft:Voxel Player</string>
+		<string>Documents:RJ CodeaUnit</string>
 	</array>
 	<key>Description</key>
 	<string>No description available</string>

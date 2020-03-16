@@ -1,11 +1,16 @@
+-- Creature
+-- RJ 20200316
+
 Creature = class()
 
 local CreatureMaxTime = 300
 
 function Creature:init(entity, x, z, behaviors)
     self.entity = entity
-    self.behaviors = behaviors or {self.avoid}
+    self.behaviors = behaviors or {self.avoidPoint, self.avoidEdge}
     self.time = 0
+    self.leftEye = vec3(-0.5, 0, 0.5)
+    self.rightEye = vec3(0.5, 0, 0.5)
     entity.x = x
     entity.z = z
     entity.y = 2 -- just above the ground
@@ -28,6 +33,28 @@ function Creature:update(dt)
     self.entity.position = self.entity.position + move*speed/divisor
 end
 
+function Creature:avoidPoint(point, force)
+    local point = point or vec3(7,0,10)
+    local force = force or 1
+    local tab = {}
+    local eyeL = self:eyePos(self.leftEye)
+    local eyeR = self:eyePos(self.rightEye)
+    local p = self.entity.position
+    p.y = 0
+    local d = p:dist(point)
+    if d > 2 then return tab end
+    local dL = eyeL:dist(point)
+    local dR = eyeR:dist(point)
+    local forceL = force/(dL*dL)
+    local forceR = force/(dR*dR)
+    if forceL > forceR then
+        tab.turn = 5*forceL
+    else
+        tab.turn = -5*forceR
+    end
+    return tab
+end
+
 function Creature:walk()
     local tab = {speed=1}
     self.time = self.time + 1
@@ -43,13 +70,13 @@ function Creature:walk()
     return tab
 end
 
-function Creature:avoid()
+function Creature:avoidEdge()
     local twist = 21
     local max = 15
     local min = 1
     local tab = {speed=3, turn=0}
-    local eyeR = self:eyePos(vec3(0.5, 0, 0.5))
-    local eyeL = self:eyePos(vec3(-0.5, 0, 0.5))
+    local eyeR = self:eyePos(self.rightEye)
+    local eyeL = self:eyePos(self.leftEye)
     tab.turn = tab.turn + self:twistForMax(eyeR.x, eyeL.x, max)*twist
     tab.turn = tab.turn + self:twistForMax(eyeR.z, eyeL.z, max)*twist
     tab.turn = tab.turn + self:twistForMin(eyeR.x, eyeL.x, min)*twist

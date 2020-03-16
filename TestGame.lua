@@ -1,3 +1,6 @@
+-- TestGame
+-- RJ 20200316
+
 function testGame1()
     CodeaUnit.detailed = true
 
@@ -12,7 +15,7 @@ function testGame1()
         end)
         
         _:test("Try again", function()
-            _:expect( 2+1).is(3)
+            _:expect(2+1).is(3)
         end)
 
     end)
