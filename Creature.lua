@@ -47,27 +47,11 @@ function Creature:avoid()
     local twist = 21
     local max = 15
     local min = 1
-    local tab = {speed=10, turn=0}
+    local tab = {speed=3, turn=0}
     local eyeR = self:eyePos(vec3(0.5, 0, 0.5))
     local eyeL = self:eyePos(vec3(-0.5, 0, 0.5))
-    if (eyeR.x > max or eyeL.x > max) then
-        print("xmax")
-        if ( eyeR.x > eyeL.x ) then
-            tab.turn = tab.turn - twist
-        else
-            tab.turn = tab.turn + twist
-        end
-        return tab
-    end
-    if (eyeR.z > max or eyeL.z > max) then
-        print("zmax")
-        if ( eyeR.z > eyeL.z ) then
-            tab.turn = tab.turn - twist
-        else
-            tab.turn = tab.turn + twist
-        end
-        return tab
-    end
+    tab.turn = tab.turn + self:twistForMax(eyeR.x, eyeL.x, max)*twist
+    tab.turn = tab.turn + self:twistForMax(eyeR.z, eyeL.z, max)*twist
     tab.turn = tab.turn + self:twistForMin(eyeR.x, eyeL.x, min)*twist
     tab.turn = tab.turn + self:twistForMin(eyeR.z, eyeL.z, min)*twist
     return tab
@@ -76,6 +60,14 @@ end
 function Creature:twistForMin(eyeR, eyeL, min)
     if eyeR < min or eyeL < min then
         return self:sign(eyeR-eyeL)
+    else
+        return 0
+    end
+end
+
+function Creature:twistForMax(eyeR, eyeL, max)
+    if eyeR > max or eyeL > max then
+        return self:sign(eyeL-eyeR)
     else
         return 0
     end
@@ -91,5 +83,4 @@ function Creature:sign(anInteger)
     else 
         return -1
     end
-    
 end
