@@ -47,11 +47,10 @@ function Creature:avoidPoint(point, force)
     local dR = eyeR:dist(point)
     local forceL = force/(dL*dL)
     local forceR = force/(dR*dR)
-    if forceL > forceR then
-        tab.turn = 5*forceL
-    else
-        tab.turn = -5*forceR
-    end
+    
+    local force = math.max(forceL, forceR)
+    local direction = self:sign(forceL-forceR)
+    tab.turn = direction*force*5
     return tab
 end
 
@@ -104,8 +103,8 @@ function Creature:eyePos(eyeRel)
     return self.entity:transformPoint(eyeRel)
 end
 
-function Creature:sign(anInteger)
-    if anInteger >= 0 then
+function Creature:sign(aNumber)
+    if aNumber >= 0 then
         return 1
     else 
         return -1
