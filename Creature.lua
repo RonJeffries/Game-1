@@ -37,23 +37,23 @@ function Creature:avoidPoint(point, forceMultiplier)
     local point = point or vec3(7,0,10)
     local forceMultiplier = forceMultiplier or 5
     local tab = {}
-    local eyeL = self:eyePos(self.leftEye)
-    local eyeR = self:eyePos(self.rightEye)
-    local p = self.entity.position
-    p.y = 0
-    local d = p:dist(point)
-    if d > 2 then return tab end
-    local dL = eyeL:dist(point)
-    local dR = eyeR:dist(point)
-    local forceL = 1/(dL*dL)
-    local forceR = 1/(dR*dR)
     
     local force,direction = self:forceAndDirectionToAvoid(point, forceMultiplier, forceL, forceR)
     tab.turn = direction*force*forceMultiplier
     return tab
 end
 
-function Creature:forceAndDirectionToAvoid(point, force, forceL, forceR)
+function Creature:forceAndDirectionToAvoid(point, forceMultiplier, forceL, forceR)
+    local eyeL = self:eyePos(self.leftEye)
+    local eyeR = self:eyePos(self.rightEye)
+    local p = self.entity.position
+    p.y = 0
+    local d = p:dist(point)
+    if d > 2 then return 0,0 end
+    local dL = eyeL:dist(point)
+    local dR = eyeR:dist(point)
+    local forceL = 1/(dL*dL)
+    local forceR = 1/(dR*dR)
     return math.max(forceL, forceR), self:sign(forceL-forceR)
 end
 
