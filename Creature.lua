@@ -33,9 +33,9 @@ function Creature:update(dt)
     self.entity.position = self.entity.position + move*speed/divisor
 end
 
-function Creature:avoidPoint(point, force)
+function Creature:avoidPoint(point, forceMultiplier)
     local point = point or vec3(7,0,10)
-    local force = force or 1
+    local forceMultiplier = forceMultiplier or 5
     local tab = {}
     local eyeL = self:eyePos(self.leftEye)
     local eyeR = self:eyePos(self.rightEye)
@@ -45,13 +45,16 @@ function Creature:avoidPoint(point, force)
     if d > 2 then return tab end
     local dL = eyeL:dist(point)
     local dR = eyeR:dist(point)
-    local forceL = force/(dL*dL)
-    local forceR = force/(dR*dR)
+    local forceL = 1/(dL*dL)
+    local forceR = 1/(dR*dR)
     
-    local force = math.max(forceL, forceR)
-    local direction = self:sign(forceL-forceR)
-    tab.turn = direction*force*5
+    local force,direction = self:forceAndDirectionToAvoid(point, forceMultiplier, forceL, forceR)
+    tab.turn = direction*force*forceMultiplier
     return tab
+end
+
+function Creature:forceAndDirectionToAvoid(point, force, forceL, forceR)
+    return math.max(forceL, forceR), self:sign(forceL-forceR)
 end
 
 function Creature:walk()
